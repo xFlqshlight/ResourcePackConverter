@@ -1,0 +1,18 @@
+{
+   "format_version" : 2,
+   "header" : {
+      "description" : "",
+      "name" : "",
+      "uuid" : "",
+      "version" : [ 0, 0, 0 ],
+      "min_engine_version" : [ 0, 0, 0 ]
+   },
+   "modules" : [
+      {
+         "description" : "",
+         "type" : "",
+         "uuid" : "",
+         "version" : [ 0, 0, 0 ]
+      }
+   ]
+}
