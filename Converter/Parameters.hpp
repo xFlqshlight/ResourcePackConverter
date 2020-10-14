@@ -74,7 +74,15 @@ namespace RP {
 		STRING ex_p; // Probably not gonna get used
 
 		int dupCountF{};
+		int dupCountS{};
+		int dupCountTH{};
+		int dupCountOP{};
+		int dupCountEX{};
 
+		/*---------------------------
+		  FIRST PARAMETER CHECKER. 
+		----------------------------*/
+	
 		for (int it = 0; it < firstParameters.size(); it++) { // Searches for first parameter in our input string
 			size_t ParamExists = input.find(firstParameters[it]);
 
@@ -123,6 +131,68 @@ namespace RP {
 
 			} if (cantFind) logger->warning(PARAMETER_ERROR_CODE_2);
 	     }
+
+		/*---------------------------
+		  SECOND PARAMETER CHECKER.
+		----------------------------*/
+	IF_DEF_(hasFirstParameter)
+		for (int it = 0; it < secondParameters.size(); it++) { // Searches for first parameter in our input string
+			size_t ParamExists = input.find(secondParameters[it]);
+
+			if (ParamExists != _STD string::npos) { // If found, do
+				s_p = secondParameters[it];
+				if (f_p == CONVERT_COMMAND && s_p != TO_BEDROCK) {
+					logger->error(PARAMETER_ERROR_CODE_4);
+					break;
+			    }
+
+				hasSecondParameter = true;
+				dupCountS = it; // store the value to dupCountS (dupCountSecond) for duplicate purposes
+				if (dupCountS == 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
+				// add 1 so it won't break
+
+				IF_DEF_DEBUG
+					std::cout << "Found second parameter: " << s_p << newline;
+				    std::cout << "dupCountS: " << dupCountS << newline;
+				END_IF_DEBUG
+					break;
+			}
+		}
+	IF_DEF_END
+
+		
+		/*---------------------------
+		  THIRD PARAMETER CHECKER.
+		----------------------------*/
+
+		/*---------------------------
+		  OPTIONAL PARAMETER CHECKER.
+		----------------------------*/
+
+		/*---------------------------
+		  EXTRA PARAMETER CHECKER.
+		----------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	    // Debug purposes
 		bool shouldOutPutThis = 0;
 		
