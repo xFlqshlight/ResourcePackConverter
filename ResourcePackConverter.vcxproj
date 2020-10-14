@@ -149,7 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Converter\ConverterMain.cpp" />
+    <ClCompile Include="Converter\Main.cpp" />
     <ClCompile Include="Converter\helpers\FileHandler.cpp" />
     <ClCompile Include="Converter\helpers\ImageProcessing.cpp" />
     <ClCompile Include="Converter\helpers\Logger.cpp" />
@@ -162,8 +162,8 @@
     <ClInclude Include="Converter\helpers\Magick.h" />
     <ClInclude Include="Converter\helpers\UUIDGen.h" />
     <ClInclude Include="Converter\include\json.hpp" />
+    <ClInclude Include="Converter\Console.hpp" />
     <ClInclude Include="Converter\Parameters.hpp" />
-    <ClInclude Include="Converter\Vectors.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Converter\helpers\Magick\NM_image.jpg" />

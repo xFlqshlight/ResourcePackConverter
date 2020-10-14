@@ -2,7 +2,7 @@
 #include "helpers/Logger.h"
 #include "helpers/FileHandler.h"
 #include "helpers/UUIDGen.h"
-#include "Parameters.hpp"
+#include "Console.hpp"
 
 void init() {
 	_STD cout << "  _____  _____   _____                          _            " << newline;

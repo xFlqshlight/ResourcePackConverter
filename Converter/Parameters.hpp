@@ -1,258 +1,117 @@
 #pragma once
-#include "Vectors.hpp"
 #include "helpers/Common.h"
 
-namespace RP {
-	struct CombinedParams {
-		bool f_finishedCombined{};
-		STRING Com_String;
-		size_t count_t;
 
-		_STD string firstParameter;
-		_STD string secondParameter;
-		_STD string thirdParameter;
-		_STD string optionalParameter;
-		_STD string extraParameter;
+_STD map<int, _STD string> warnings = { // Int = warning code, string = warning
+	_STD pair<int, _STD string>(1, "--convert <platform> <include> <optionalInclude> [See --help for include parameters]"),
+	_STD pair<int, _STD string>(2, "--help <page>"),
+	_STD pair<int, _STD string>(3, "--info [OPTIONAL]<parameter>"),
+	_STD pair<int, _STD string>(4, "--getStatus <target> [See --help for target parameters]"),
+	_STD pair<int, _STD string>(5, "--iterate <list> [See --help for list parameters]")
+};
 
-	} combinedParams;
+_STD map<int, _STD string> errors = { // Int = error code, string = error
+	_STD pair<int, _STD string>(1, "Duplicate first parameters!"),
+	_STD pair<int, _STD string>(2, "Unknown first parameter "),
+	_STD pair<int, _STD string>(3, "Duplicate parameter "),
+	_STD pair<int, _STD string>(4, "Incompatible second parameter"),
+	_STD pair<int, _STD string>(4, "Incompatible third parameter"),
+	_STD pair<int, _STD string>(4, "Incompatible optional parameter"),
+	_STD pair<int, _STD string>(4, "Incompatible extra parameter"),
+};
 
-	_STD string getCombinedString() { return combinedParams.Com_String; }
+// Error codes
+#define PARAMETER_ERROR_CODE_1 errors.find(1)->second
+#define PARAMETER_ERROR_CODE_2 errors.find(2)->second
+#define PARAMETER_ERROR_CODE_3 errors.find(3)->second
+#define PARAMETER_ERROR_CODE_4 errors.find(4)->second
+#define PARAMETER_WARNING_CODE_1 warnings.find(1)->second
+#define PARAMETER_WARNING_CODE_2 warnings.find(2)->second
+#define PARAMETER_WARNING_CODE_3 warnings.find(3)->second
+#define PARAMETER_WARNING_CODE_4 warnings.find(4)->second
+#define PARAMETER_WARNING_CODE_5 warnings.find(5)->second
 
-	_STD string ConCat(CSTRING_NONCONST f[], CSTRING_NONCONST s[], CSTRING_NONCONST th[], CSTRING_NONCONST op[], CSTRING_NONCONST ex[]) {
-		_STD string newf, news, newth, newop, newex;
-		_STD string error = "Can't cast C-strings to std::string";
-		RP_TRY
-		newf = static_cast<_STD string>(f);
-		news = static_cast<_STD string>(s);
-		newth = static_cast<_STD string>(th);
-		newop = static_cast<_STD string>(op);
-		newex = static_cast<_STD string>(ex);
-		RP_TRY_END RP_CATCH_EXCEPTION throw error; combinedParams.f_finishedCombined = false; RP_CATCH_EXCEPTION_END
+_STD vector<_STD string> firstParameters = { // --
+	("--help"), // 0
+	("--convert"),// 1
+	("--init"),// 2
+	("--info"),// 3
+	("--iterate"), // 4
+	("--getStatus") // 5
+};
 
-		combinedParams.f_finishedCombined = true;
-		return newf + STDSPACE + news + STDSPACE + newth + STDSPACE + newop + STDSPACE + newex;
-	}
+// Macros
+#define HELP_COMMAND firstParameters[0]
+#define CONVERT_COMMAND firstParameters[1]
+#define INIT_COMMAND firstParameters[2]
+#define INFO_COMMAND firstParameters[3]
+#define ITERATE_COMMAND firstParameters[4]
+#define GETSTATUS_COMMAND firstParameters[5]
 
-	bool Transfer(CSTRING_NONCONST f[], CSTRING_NONCONST s[], CSTRING_NONCONST th[], CSTRING_NONCONST op[], CSTRING_NONCONST ex[]) {
-		_STD string newf, news, newth, newop, newex;
+_STD vector<_STD string> secondParameters = { // __
+	(" to_bedrock"),// 0
+	(" directoryList"), // 1
+	(" commandList"), // 2
+	(" filteredSuccess"), // 3
+	(" mcMetaExists"), // 4
+	(" filteredString"), // 5
+	(" f_getMcMeta") // 6
+};
 
-		RP_TRY
-		newf = static_cast<_STD string>(f);
-		news = static_cast<_STD string>(s);
-		newth = static_cast<_STD string>(th);
-		newop = static_cast<_STD string>(op);
-		newex = static_cast<_STD string>(ex);
+// Macros
+#define TO_BEDROCK secondParameters[0]
+#define DIRECTORYLIST secondParameters[1]
+#define COMMANDLIST secondParameters[2]
+#define FILTEREDSUCCESS secondParameters[3]
+#define MCMETAEXISTS secondParameters[4]
+#define FILTEREDSTRING secondParameters[5]
+#define FINISHED_GETMCMETA secondParameters[6]
 
-		combinedParams.firstParameter = newf;
-		combinedParams.secondParameter = news;
-		combinedParams.thirdParameter = newth;
-		combinedParams.optionalParameter = newop;
-		combinedParams.extraParameter = newex;
-		RP_TRY_END RP_CATCH_EXCEPTION log(e.what()); return false; RP_CATCH_EXCEPTION_END
+_STD vector<_STD string> thirdParameters = { // -
+	("-include"),// 0
+};
 
-		return true;
-	}
+// Macros
+#define INCLUDE thirdParameters[0]
 
-	VOID scanForParameters(STRING& input) {
-		// Buffers 
-		CSTRING_NONCONST f_paramBuffer[RP_PARAMETER_MAX_BUFFER];
-		CSTRING_NONCONST s_paramBuffer[RP_PARAMETER_MAX_BUFFER];
-		CSTRING_NONCONST th_paramBuffer[RP_PARAMETER_MAX_BUFFER];
-		CSTRING_NONCONST op_paramBuffer[RP_PARAMETER_MAX_BUFFER];
-		CSTRING_NONCONST ex_paramBuffer[RP_PARAMETER_MAX_BUFFER];
+_STD vector<_STD string> optionalParameters = {
+	("astral"),// 0
+	("java_ui"),// 1
+	("sildursbasic"),// 2
+	("-settings"),// 3
+	("bedrocksky"),// 4
+	("javasky"),// 5
+	("nocubemap"),// 6
+	("nopocketwidgets"),// 7
+	("nopotioneffects"),// 8
+	("nobreakinganims"),// 9
+	("cubemap"),// 10
+	("pocketwidgets"),// 11
+	("potioneffects"),// 12
+	("breakinganims"),// 13
+};
 
-		// Checks
-		bool hasFirstParameter{};
-		STRING f_p;
-		bool hasSecondParameter{};
-		STRING s_p;
-		bool hasThirdParameter{};
-		STRING th_p;
-		bool hasOptionalParameter{};
-		STRING op_p;
-		bool hasExtraParameter{};
-		STRING ex_p; // Probably not gonna get used
+// Macros
+#define SETTINGS_COMMAND optionalParameters[3]
+#define INCLUDE_ASTRAL optionalParameters[0]
+#define INCLUDE_JAVA_UI optionalParameters[1]
+#define INCLUDE_SILDURS_BASIC optionalParameters[2]
+#define APPLY_NO_CUBEMAP optionalParameters[6]
+#define APPLY_NO_POCKET_WIDGETS optionalParameters[7]
+#define APPLY_NO_POTION_EFFECTS optionalParameters[8]
+#define APPLY_NO_BREAKING_ANIMS optionalParameters[9]
+#define APPLY_CUBEMAP optionalParameters[10]
+#define APPLY_BEDROCK_SKY optionalParameters[4]
+#define APPLY_JAVA_SKY optionalParameters[5]
+#define APPLY_POCKET_WIDGETS optionalParameters[11]
+#define APPLY_POTION_EFFECTS optionalParameters[12]
+#define APPLY_BREAKING_ANIMS optionalParameters[13]
 
-#define FIRST_PARAMETER f_p
-#define SECOND_PARAMETER s_p
-#define THIRD_PARAMETER th_p
-#define OPTIONAL_PARAMETER op_p
-#define EXTRA_PARAMETER ex_p
+_STD vector<_STD string> extraParameters = {
+	("clear"),// 0
+	("log string") //1
+};
 
-		int dupCountF{};
-		int dupCountS{};
-		int dupCountTH{};
-		int dupCountOP{};
-		int dupCountEX{};
-
-		/*---------------------------
-		  FIRST PARAMETER CHECKER. 
-		----------------------------*/
-	
-		for (int it = 0; it < firstParameters.size(); it++) { // Searches for first parameter in our input string
-			size_t ParamExists = input.find(firstParameters[it]);
-
-			if (ParamExists IS_NOT std::string::npos) { // If found, do
-				f_p = firstParameters[it];
-				hasFirstParameter = true;
-				dupCountF = it; // store the value to dupCountF (dupCountFirst) for duplicate purposes
-				if (dupCountF IS 0) { dupCountF++; } // If dupCountF stored 0 (first element in our FirstParameters_
-				// add 1 so it won't break
-
-				IF_DEF_DEBUG
-				std::cout << "Found first parameter: " << f_p << newline;
-				std::cout << "dupCountF: " << dupCountF << newline;
-				END_IF_DEBUG
-				break;
-			}
-		}
-		// If "--help" is on string f_p, start at 0 + dupCountF to include the parameter string next to "--help", otherwise start at 1 + dupCountF
-		// I honestly don't know how this worked, lol
-		for (int second = (f_p IS "--help") ? 0 + dupCountF : 1 + dupCountF; second < firstParameters.size(); second++) { // Check for duplicate parameters
-			size_t DuplicateExists = input.find(firstParameters[second]);
-
-			if (DuplicateExists IS_NOT std::string::npos) {
-				IF_DEF_DEBUG
-				std::cout << "Found duplicate parameter: " << firstParameters[second] << newline;
-				std::cout << "second: " << second << newline;
-				END_IF_DEBUG
-				logger->warning(PARAMETER_ERROR_CODE_1);
-				break;
-			}
-			dupCountF = 0;
-		}
-
-		bool cantFind{};
-		if (!hasFirstParameter) { // Find duplicate parameter
-			for (int third = 0; third < firstParameters.size(); third++) {
-				_STD string prefix = "--";
-				size_t hasPrefix = input.find(prefix);
-				size_t UnknownParameter = input.find(firstParameters[third]);
-	
-				if (hasPrefix IS_NOT std::string::npos) { // Must find prefix first
-					if (third < firstParameters.size() && UnknownParameter IS std::string::npos) { 
-						cantFind = true; // We don't care about how much this iterates
-					}
-				}
-
-			} if (cantFind) logger->warning(PARAMETER_ERROR_CODE_2);
-	     }
-
-		/*---------------------------
-		  SECOND PARAMETER CHECKER.
-		----------------------------*/
-	IF_DEF_(hasFirstParameter)
-		for (int it = 0; it < secondParameters.size(); it++) { // Searches for second parameter in our input string
-			size_t ParamExists = input.find(secondParameters[it]);
-			bool isHelpCommand{};
-
-			if (ParamExists IS_NOT std::string::npos) { // If found, do
-				s_p = secondParameters[it];
-
-				if (f_p IS HELP_COMMAND) {
-					isHelpCommand = true;
-				}
-
-				hasSecondParameter = true;
-				dupCountS = it; // store the value to dupCountS (dupCountSecond) for duplicate purposes
-				if (dupCountS IS 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
-				// add 1 so it won't break
-
-				IF_DEF_DEBUG
-					std::cout << "Found second parameter: " << s_p << newline;
-				    std::cout << "dupCountS: " << dupCountS << newline;
-				END_IF_DEBUG
-					break;
-			}
-
-			/*---------------------------
-			COMPATIBILE PARAMETER CHECKER.
-			----------------------------*/
-			if (f_p IS CONVERT_COMMAND AND s_p IS_NOT TO_BEDROCK) {
-				logger->error(PARAMETER_ERROR_CODE_4);
-				break;
-			}
-
-			if (isHelpCommand AND hasSecondParameter)
-				logger->warning("Help command doesn't accept any parameters");
-
-			if (FIRST_PARAMETER IS ITERATE_COMMAND AND (SECOND_PARAMETER IS_NOT DIRECTORYLIST OR SECOND_PARAMETER IS_NOT COMMANDLIST))
-				logger->error(PARAMETER_ERROR_CODE_4);
-	
-
-
-			if (ParamExists IS std::string::npos) {
-				//logger->error(PARAMETER_ERROR_CODE_4);
-				break;
-			}
-		}
-	IF_DEF_END
-
-		
-		/*---------------------------
-		  THIRD PARAMETER CHECKER.
-		----------------------------*/
-
-		/*---------------------------
-		  OPTIONAL PARAMETER CHECKER.
-		----------------------------*/
-
-		/*---------------------------
-		  EXTRA PARAMETER CHECKER.
-		----------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	    // Debug purposes
-		bool shouldOutPutThis = 0;
-		
-		IF_DEF_(shouldOutPutThis)
-			clog_noline(_STD boolalpha);
-		_STD cout << hasFirstParameter << CSPACE << hasSecondParameter << CSPACE << hasThirdParameter << CSPACE
-			<< hasOptionalParameter << CSPACE << hasExtraParameter << newline;
-		IF_DEF_END
-
-		strcpy_s(f_paramBuffer, RP_PARAMETER_MAX_BUFFER, f_p.c_str());
-		strcpy_s(s_paramBuffer, RP_PARAMETER_MAX_BUFFER, s_p.c_str());
-		strcpy_s(th_paramBuffer, RP_PARAMETER_MAX_BUFFER, th_p.c_str());
-		strcpy_s(op_paramBuffer, RP_PARAMETER_MAX_BUFFER, op_p.c_str());
-		strcpy_s(ex_paramBuffer, RP_PARAMETER_MAX_BUFFER, ex_p.c_str());
-
-		RP_TRY
-		// Store the new string to combined string
-		combinedParams.Com_String = ConCat(f_paramBuffer, s_paramBuffer, th_paramBuffer, op_paramBuffer, ex_paramBuffer);
-		RP_TRY_END catch (std::string error) { logger->error(error); }
-
-		// Transfer buffers to strings, perhaps use them, returns false or true
-		if (Transfer(f_paramBuffer, s_paramBuffer, th_paramBuffer, op_paramBuffer, ex_paramBuffer) && combinedParams.f_finishedCombined) {
-			// Clear buffers
-			memset(f_paramBuffer, 0, RP_PARAMETER_MAX_BUFFER);
-			memset(s_paramBuffer, 0, RP_PARAMETER_MAX_BUFFER);
-			memset(th_paramBuffer, 0, RP_PARAMETER_MAX_BUFFER);
-			memset(op_paramBuffer, 0, RP_PARAMETER_MAX_BUFFER);
-			memset(ex_paramBuffer, 0, RP_PARAMETER_MAX_BUFFER);
-		}
-
-		IF_DEF_(shouldOutPutThis)
-			_STD cout << combinedParams.Com_String << newline;
-		IF_DEF_END
-	}
-}
+// Macros
+#define CLEAR_COMMAND extraParameters[0]
+#define LOG_STRING_COMMAND extraParameters[1]
