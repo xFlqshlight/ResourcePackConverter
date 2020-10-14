@@ -73,6 +73,12 @@ namespace RP {
 		bool hasExtraParameter{};
 		STRING ex_p; // Probably not gonna get used
 
+#define FIRST_PARAMETER f_p
+#define SECOND_PARAMETER s_p
+#define THIRD_PARAMETER th_p
+#define OPTIONAL_PARAMETER op_p
+#define EXTRA_PARAMETER ex_p
+
 		int dupCountF{};
 		int dupCountS{};
 		int dupCountTH{};
@@ -86,11 +92,11 @@ namespace RP {
 		for (int it = 0; it < firstParameters.size(); it++) { // Searches for first parameter in our input string
 			size_t ParamExists = input.find(firstParameters[it]);
 
-			if (ParamExists != _STD string::npos) { // If found, do
+			if (ParamExists IS_NOT std::string::npos) { // If found, do
 				f_p = firstParameters[it];
 				hasFirstParameter = true;
 				dupCountF = it; // store the value to dupCountF (dupCountFirst) for duplicate purposes
-				if (dupCountF == 0) { dupCountF++; } // If dupCountF stored 0 (first element in our FirstParameters_
+				if (dupCountF IS 0) { dupCountF++; } // If dupCountF stored 0 (first element in our FirstParameters_
 				// add 1 so it won't break
 
 				IF_DEF_DEBUG
@@ -102,10 +108,10 @@ namespace RP {
 		}
 		// If "--help" is on string f_p, start at 0 + dupCountF to include the parameter string next to "--help", otherwise start at 1 + dupCountF
 		// I honestly don't know how this worked, lol
-		for (int second = (f_p == "--help") ? 0 + dupCountF : 1 + dupCountF; second < firstParameters.size(); second++) { // Check for duplicate parameters
+		for (int second = (f_p IS "--help") ? 0 + dupCountF : 1 + dupCountF; second < firstParameters.size(); second++) { // Check for duplicate parameters
 			size_t DuplicateExists = input.find(firstParameters[second]);
 
-			if (DuplicateExists != _STD string::npos) {
+			if (DuplicateExists IS_NOT std::string::npos) {
 				IF_DEF_DEBUG
 				std::cout << "Found duplicate parameter: " << firstParameters[second] << newline;
 				std::cout << "second: " << second << newline;
@@ -123,8 +129,8 @@ namespace RP {
 				size_t hasPrefix = input.find(prefix);
 				size_t UnknownParameter = input.find(firstParameters[third]);
 	
-				if (hasPrefix != _STD string::npos) { // Must find prefix first
-					if (third < firstParameters.size() && UnknownParameter == _STD string::npos) { 
+				if (hasPrefix IS_NOT std::string::npos) { // Must find prefix first
+					if (third < firstParameters.size() && UnknownParameter IS std::string::npos) { 
 						cantFind = true; // We don't care about how much this iterates
 					}
 				}
@@ -136,19 +142,20 @@ namespace RP {
 		  SECOND PARAMETER CHECKER.
 		----------------------------*/
 	IF_DEF_(hasFirstParameter)
-		for (int it = 0; it < secondParameters.size(); it++) { // Searches for first parameter in our input string
+		for (int it = 0; it < secondParameters.size(); it++) { // Searches for second parameter in our input string
 			size_t ParamExists = input.find(secondParameters[it]);
+			bool isHelpCommand{};
 
-			if (ParamExists != _STD string::npos) { // If found, do
+			if (ParamExists IS_NOT std::string::npos) { // If found, do
 				s_p = secondParameters[it];
-				if (f_p == CONVERT_COMMAND && s_p != TO_BEDROCK) {
-					logger->error(PARAMETER_ERROR_CODE_4);
-					break;
-			    }
+
+				if (f_p IS HELP_COMMAND) {
+					isHelpCommand = true;
+				}
 
 				hasSecondParameter = true;
 				dupCountS = it; // store the value to dupCountS (dupCountSecond) for duplicate purposes
-				if (dupCountS == 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
+				if (dupCountS IS 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
 				// add 1 so it won't break
 
 				IF_DEF_DEBUG
@@ -156,6 +163,27 @@ namespace RP {
 				    std::cout << "dupCountS: " << dupCountS << newline;
 				END_IF_DEBUG
 					break;
+			}
+
+			/*---------------------------
+			COMPATIBILE PARAMETER CHECKER.
+			----------------------------*/
+			if (f_p IS CONVERT_COMMAND AND s_p IS_NOT TO_BEDROCK) {
+				logger->error(PARAMETER_ERROR_CODE_4);
+				break;
+			}
+
+			if (isHelpCommand AND hasSecondParameter)
+				logger->warning("Help command doesn't accept any parameters");
+
+			if (FIRST_PARAMETER IS ITERATE_COMMAND AND (SECOND_PARAMETER IS_NOT DIRECTORYLIST OR SECOND_PARAMETER IS_NOT COMMANDLIST))
+				logger->error(PARAMETER_ERROR_CODE_4);
+	
+
+
+			if (ParamExists IS std::string::npos) {
+				//logger->error(PARAMETER_ERROR_CODE_4);
+				break;
 			}
 		}
 	IF_DEF_END

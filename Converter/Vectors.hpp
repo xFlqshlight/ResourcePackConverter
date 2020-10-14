@@ -1,6 +1,7 @@
 #pragma once
 #include "helpers/Common.h"
 
+
 _STD map<int, _STD string> warnings = { // Int = warning code, string = warning
 	_STD pair<int, _STD string>(1, "--convert <platform> <include> <optionalInclude> [See --help for include parameters]"),
 	_STD pair<int, _STD string>(2, "--help <page>"),

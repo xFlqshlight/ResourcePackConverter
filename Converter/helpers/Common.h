@@ -57,3 +57,9 @@ inline extern const bool debug = 1;
 #define VOID_PTR void*
 #define IS_NULL_PTR == nullptr
 #define _NULL_PTR = nullptr
+
+// Logical Macros
+#define AND &&
+#define OR ||
+#define IS ==
+#define IS_NOT !=

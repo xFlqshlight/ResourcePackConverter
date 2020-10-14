@@ -71,12 +71,12 @@ void userInputEvent() {
 				RP_TRY_END RP_CATCH_EXCEPTION log(e.what()); clog_noline(_STD endl); CMD_CLEAR; RP_CATCH_EXCEPTION_END
 			}
 		}
-		if (cmdInput == extraParameters[0]) { // clear
+		if (cmdInput == CLEAR_COMMAND) { // clear
 			CMD_CLEAR;
 			system("cls");
 			init();
 		}
-		if (cmdInput == extraParameters[1]) {
+		if (cmdInput == LOG_STRING_COMMAND) {
 			log(_RP getCombinedString());
 		}
 RP_TRY
