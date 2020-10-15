@@ -96,11 +96,11 @@ namespace RP {
 		bool hasExtraParameter{};
 		STRING ex_p; // Probably not gonna get used
 
-#define FIRST_PARAMETER f_p
-#define SECOND_PARAMETER s_p
-#define THIRD_PARAMETER th_p
-#define OPTIONAL_PARAMETER op_p
-#define EXTRA_PARAMETER ex_p
+		#define FIRST_PARAMETER f_p
+		#define SECOND_PARAMETER s_p
+		#define THIRD_PARAMETER th_p
+		#define OPTIONAL_PARAMETER op_p
+		#define EXTRA_PARAMETER ex_p
 
 		int dupCountF{};
 		int dupCountS{};
