@@ -167,7 +167,7 @@ namespace RP {
 				s_p = secondParameters[it];
 				hasSecondParameter = true;
 				dupCountS = it; // store the value to dupCountS (dupCountSecond) for duplicate purposes
-				//if (dupCountS IS 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
+				if (dupCountS IS 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
 				// add 1 so it won't break
 
 				IF_DEF_DEBUG
@@ -177,6 +177,31 @@ namespace RP {
 					break;
 			}
 		}
+	IF_DEF_(hasFirstParameter AND hasSecondParameter)
+		for (int second = (s_p IS "to_bedrock") ? 0 + dupCountS : 1 + dupCountS; second < secondParameters.size(); second++) { // Check for duplicate parameters
+			size_t DuplicateExists = input.find(secondParameters[second]);
+
+			if (DuplicateExists IS_NOT std::string::npos) {
+				IF_DEF_DEBUG
+					std::cout << "Found duplicate parameter: " << secondParameters[second] << newline;
+				    std::cout << "second: " << second << newline;
+				END_IF_DEBUG
+					logger->warning(PARAMETER_ERROR_CODE_1);
+				break;
+			}
+			dupCountS = 0;
+		}
+		bool cantFindSecond{};
+		if (!hasSecondParameter) { // Find duplicate parameter
+			for (int third = 0; third < secondParameters.size(); third++) {
+				size_t UnknownParameter = input.find(secondParameters[third]);
+				if (third < secondParameters.size() && UnknownParameter IS std::string::npos) {
+					cantFindSecond = true; // We don't care about how much this iterates
+				}
+			} if (cantFindSecond) logger->warning(PARAMETER_ERROR_CODE_3);
+		}
+	IF_DEF_END
+
 		/*---------------------------
 		COMPATIBILE PARAMETER CHECKER.
 		----------------------------*/
