@@ -111,7 +111,6 @@ namespace RP {
 		/*---------------------------
 		  FIRST PARAMETER CHECKER. 
 		----------------------------*/
-	
 		for (int it = 0; it < firstParameters.size(); it++) { // Searches for first parameter in our input string
 			size_t ParamExists = input.find(firstParameters[it]);
 
@@ -163,7 +162,7 @@ namespace RP {
 		/*---------------------------
 		  SECOND PARAMETER CHECKER.
 		----------------------------*/
-	IF_DEF_(hasFirstParameter) // Only check second parameters once it has a first parameter
+IF_DEF_(hasFirstParameter) // Only check second parameters once it has a first parameter
 		for (int it = 0; it < secondParameters.size(); it++) { // Searches for second parameter in our input string
 			size_t ParamExists = input.find(secondParameters[it]);
 
@@ -211,15 +210,12 @@ IF_DEF_END
 		/*---------------------------
 		COMPATIBILE PARAMETER CHECKER.
 		----------------------------*/
-
 		if (f_p IS CONVERT_COMMAND AND s_p IS_NOT TO_BEDROCK) {
 			logger->error(PARAMETER_ERROR_CODE_4);
 		}
-
 		if (f_p IS HELP_COMMAND AND hasSecondParameter) {
 			logger->warning("Help command doesn't accept any parameters");
 		}
-
 		if (FIRST_PARAMETER == ITERATE_COMMAND && (SECOND_PARAMETER != DIRECTORYLIST && SECOND_PARAMETER != COMMANDLIST)) {
 			logger->error(PARAMETER_ERROR_CODE_4);
 		}
@@ -227,7 +223,6 @@ IF_DEF_END
             SECOND_PARAMETER != MCMETAEXISTS && SECOND_PARAMETER != FINISHED_GETMCMETA)) {
 			logger->error(PARAMETER_ERROR_CODE_4);
 		}
-		
 		/*---------------------------
 		  THIRD PARAMETER CHECKER.
 		----------------------------*/
@@ -291,6 +286,8 @@ IF_DEF_END
 		IF_DEF_(shouldOutPutThis)
 			_STD cout << combinedParams.Com_String << newline;
 		IF_DEF_END
+
+		return;
 	}
 	void userInputEvent() {
 		_STD unique_ptr<FilterReturnType> filter_t = _STD make_unique<FilterReturnType>();
