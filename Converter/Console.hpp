@@ -84,7 +84,6 @@ namespace RP {
 		bool hasFirstParameter{};
 		STRING f_p;
 		bool hasSecondParameter{};
-		bool hasNoSecondParameter{};
 		STRING s_p;
 		bool hasThirdParameter{};
 		STRING th_p;
@@ -229,17 +228,24 @@ namespace RP {
 		/*---------------------------
 		  EXTRA PARAMETER CHECKER.
 		----------------------------*/
+		bool stillCheckingExtraParameters{};
+
+	IF_DEF_(!stillCheckingExtraParameters)
 		if (input == CLEAR_COMMAND) { // clear
 			input.clear();
 			system("cls");
 			init();
+			stillCheckingExtraParameters = true;
 		}
 		if (input == LOG_STRING_COMMAND) {
 			log(_RP getCombinedString());
+			stillCheckingExtraParameters = true;
 		}
 		if (input == DISPLAY_SECOND_PARAMETER) {
-			std::cout << s_p << newline;
+			std::cout << combinedParams.secondParameter << newline;
+			stillCheckingExtraParameters = true;
 		}
+	IF_DEF_END
 
 
 
