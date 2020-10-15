@@ -15,9 +15,10 @@ _STD map<int, _STD string> errors = { // Int = error code, string = error
 	_STD pair<int, _STD string>(2, "Unknown first parameter "),
 	_STD pair<int, _STD string>(3, "Duplicate parameter "),
 	_STD pair<int, _STD string>(4, "Incompatible second parameter"),
-	_STD pair<int, _STD string>(4, "Incompatible third parameter"),
-	_STD pair<int, _STD string>(4, "Incompatible optional parameter"),
-	_STD pair<int, _STD string>(4, "Incompatible extra parameter"),
+	_STD pair<int, _STD string>(5, "Incompatible third parameter"),
+	_STD pair<int, _STD string>(6, "Incompatible optional parameter"),
+	_STD pair<int, _STD string>(7, "Incompatible extra parameter"),
+	_STD pair<int, _STD string>(8, "Cannot resolve second parameter if there is no first parameter")
 };
 
 // Error codes
@@ -25,11 +26,16 @@ _STD map<int, _STD string> errors = { // Int = error code, string = error
 #define PARAMETER_ERROR_CODE_2 errors.find(2)->second
 #define PARAMETER_ERROR_CODE_3 errors.find(3)->second
 #define PARAMETER_ERROR_CODE_4 errors.find(4)->second
+#define PARAMETER_ERROR_CODE_5 errors.find(5)->second
+#define PARAMETER_ERROR_CODE_6 errors.find(6)->second
+#define PARAMETER_ERROR_CODE_7 errors.find(7)->second
+#define PARAMETER_ERROR_CODE_8 errors.find(8)->second
 #define PARAMETER_WARNING_CODE_1 warnings.find(1)->second
 #define PARAMETER_WARNING_CODE_2 warnings.find(2)->second
 #define PARAMETER_WARNING_CODE_3 warnings.find(3)->second
 #define PARAMETER_WARNING_CODE_4 warnings.find(4)->second
 #define PARAMETER_WARNING_CODE_5 warnings.find(5)->second
+
 
 _STD vector<_STD string> firstParameters = { // --
 	("--help"), // 0

@@ -163,6 +163,7 @@ namespace RP {
 		/*---------------------------
 		  SECOND PARAMETER CHECKER.
 		----------------------------*/
+	IF_DEF_(hasFirstParameter) // Only check second parameters once it has a first parameter
 		for (int it = 0; it < secondParameters.size(); it++) { // Searches for second parameter in our input string
 			size_t ParamExists = input.find(secondParameters[it]);
 
@@ -180,7 +181,8 @@ namespace RP {
 					break;
 			}
 		}
-	IF_DEF_(hasFirstParameter AND hasSecondParameter)
+	IF_DEF_(hasFirstParameter AND hasSecondParameter) // First parameter duplicate checking doesn't work, so we need to check if 
+		                                              // the second parameter exists before checking for duplicates
 		for (int second = (s_p IS "to_bedrock") ? 0 + dupCountS : 1 + dupCountS; second < secondParameters.size(); second++) { // Check for duplicate parameters
 			size_t DuplicateExists = input.find(secondParameters[second]);
 
@@ -204,6 +206,7 @@ namespace RP {
 			} if (cantFindSecond) logger->warning(PARAMETER_ERROR_CODE_3);
 		}
 	IF_DEF_END
+IF_DEF_END
 
 		/*---------------------------
 		COMPATIBILE PARAMETER CHECKER.
@@ -218,6 +221,10 @@ namespace RP {
 		}
 
 		if (FIRST_PARAMETER == ITERATE_COMMAND && (SECOND_PARAMETER != DIRECTORYLIST && SECOND_PARAMETER != COMMANDLIST)) {
+			logger->error(PARAMETER_ERROR_CODE_4);
+		}
+		if (FIRST_PARAMETER == GETSTATUS_COMMAND && (SECOND_PARAMETER != FILTEREDSTRING && SECOND_PARAMETER != FILTEREDSUCCESS &&
+            SECOND_PARAMETER != MCMETAEXISTS && SECOND_PARAMETER != FINISHED_GETMCMETA)) {
 			logger->error(PARAMETER_ERROR_CODE_4);
 		}
 		
