@@ -49,13 +49,13 @@ _STD vector<_STD string> firstParameters = { // --
 #define GETSTATUS_COMMAND firstParameters[5]
 
 _STD vector<_STD string> secondParameters = { // __
-	(" to_bedrock"),// 0
-	(" directoryList"), // 1
-	(" commandList"), // 2
-	(" filteredSuccess"), // 3
-	(" mcMetaExists"), // 4
-	(" filteredString"), // 5
-	(" f_getMcMeta") // 6
+	("to_bedrock"),// 0
+	("directoryList"), // 1
+	("commandList"), // 2
+	("filteredSuccess"), // 3
+	("mcMetaExists"), // 4
+	("filteredString"), // 5
+	("f_getMcMeta") // 6
 };
 
 // Macros
@@ -109,9 +109,11 @@ _STD vector<_STD string> optionalParameters = {
 
 _STD vector<_STD string> extraParameters = {
 	("clear"),// 0
-	("log string") //1
+	("log string"), //1
+	("second_parameter")
 };
 
 // Macros
 #define CLEAR_COMMAND extraParameters[0]
 #define LOG_STRING_COMMAND extraParameters[1]
+#define DISPLAY_SECOND_PARAMETER extraParameters[2]

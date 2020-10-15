@@ -4,24 +4,7 @@
 #include "helpers/UUIDGen.h"
 #include "Console.hpp"
 
-void init() {
-	_STD cout << "  _____  _____   _____                          _            " << newline;
-	_STD cout << " |  __ \\|  __ \\ / ____|                        | |           " << newline;
-	_STD cout << " | |__) | |__) | |     ___  _ ____   _____ _ __| |_ ___ _ __ " << newline;
-	_STD cout << " |  _  /|  ___/| |    / _ \\| '_ \\ \\ / / _ \\ '__| __/ _ \\ '__|" << newline;
-	_STD cout << " | | \\ \\| |    | |___| (_) | | | \\ V /  __/ |  | ||  __/ |   " << newline;
-	_STD cout << " |_|  \\_\\_|     \\_____\\___/|_| |_|\\_/ \\___|_|   \\__\\___|_|   " << newline;
-	_STD cout << newline;
 
-	logger->success("Welcome to Resource Pack Converter V1.0 by Light");
-	_STD cout << "This is an open-source, free, commandline application written in C++ for converting Java Edition resource packs" << newline;
-	_STD cout << "to Bedrock Edition. It supports custom skies, breaking animations, potionhud fixes and experience bar cutotus." << newline;
-	_STD cout << "It is still in early development and will have many updates coming soon, so stay tuned." << newline;
-	_STD cout << newline;
-	_STD cout << "To get started, type --help for the list of commands." << newline;
-	_STD cout << newline;
-
-}
 
 void userInputEvent() {
 	_STD unique_ptr<FilterReturnType> filter_t = _STD make_unique<FilterReturnType>();
@@ -65,19 +48,11 @@ void userInputEvent() {
 						//fs::create_directories(path);
 						logger->success("Scanning Finished.");
 						filter_t->filteredString.clear();
-						init();
+						_RP init();
 					}
 				// Catch
 				RP_TRY_END RP_CATCH_EXCEPTION log(e.what()); clog_noline(_STD endl); CMD_CLEAR; RP_CATCH_EXCEPTION_END
 			}
-		}
-		if (cmdInput == CLEAR_COMMAND) { // clear
-			CMD_CLEAR;
-			system("cls");
-			init();
-		}
-		if (cmdInput == LOG_STRING_COMMAND) {
-			log(_RP getCombinedString());
 		}
 RP_TRY
 	IF_DEF_DEBUG // If debug mode
@@ -93,7 +68,7 @@ RP_TRY_END RP_CATCH_EXCEPTION log(e.what()); clog_noline(_STD endl); CMD_CLEAR; 
 
 int main() {
 
-	init();
+	_RP init();
 	userInputEvent();
 
 }

@@ -3,6 +3,25 @@
 #include "helpers/Common.h"
 
 namespace RP {
+	void init() {
+		_STD cout << "  _____  _____   _____                          _            " << newline;
+		_STD cout << " |  __ \\|  __ \\ / ____|                        | |           " << newline;
+		_STD cout << " | |__) | |__) | |     ___  _ ____   _____ _ __| |_ ___ _ __ " << newline;
+		_STD cout << " |  _  /|  ___/| |    / _ \\| '_ \\ \\ / / _ \\ '__| __/ _ \\ '__|" << newline;
+		_STD cout << " | | \\ \\| |    | |___| (_) | | | \\ V /  __/ |  | ||  __/ |   " << newline;
+		_STD cout << " |_|  \\_\\_|     \\_____\\___/|_| |_|\\_/ \\___|_|   \\__\\___|_|   " << newline;
+		_STD cout << newline;
+
+		logger->success("Welcome to Resource Pack Converter V1.0 by Light");
+		_STD cout << "This is an open-source, free, commandline application written in C++ for converting Java Edition resource packs" << newline;
+		_STD cout << "to Bedrock Edition. It supports custom skies, breaking animations, potionhud fixes and experience bar cutotus." << newline;
+		_STD cout << "It is still in early development and will have many updates coming soon, so stay tuned." << newline;
+		_STD cout << newline;
+		_STD cout << "To get started, type --help for the list of commands." << newline;
+		_STD cout << newline;
+
+	}
+
 	struct CombinedParams {
 		bool f_finishedCombined{}; // finished combined?
 		STRING Com_String; // combined string
@@ -122,7 +141,6 @@ namespace RP {
 			}
 			dupCountF = 0;
 		}
-
 		bool cantFind{};
 		if (!hasFirstParameter) { // Find duplicate parameter
 			for (int third = 0; third < firstParameters.size(); third++) {
@@ -145,12 +163,11 @@ namespace RP {
 		for (int it = 0; it < secondParameters.size(); it++) { // Searches for second parameter in our input string
 			size_t ParamExists = input.find(secondParameters[it]);
 
-
 			if (ParamExists IS_NOT std::string::npos) { // If found, do
 				s_p = secondParameters[it];
 				hasSecondParameter = true;
 				dupCountS = it; // store the value to dupCountS (dupCountSecond) for duplicate purposes
-				if (dupCountS IS 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
+				//if (dupCountS IS 0) { dupCountS++; } // If dupCountS stored 0 (first element in our SecondParameters_
 				// add 1 so it won't break
 
 				IF_DEF_DEBUG
@@ -159,12 +176,6 @@ namespace RP {
 				END_IF_DEBUG
 					break;
 			}
-			if (ParamExists IS std::string::npos) {
-				//logger->error(PARAMETER_ERROR_CODE_4);
-				hasNoSecondParameter = true;
-				break;
-			}
-
 		}
 		/*---------------------------
 		COMPATIBILE PARAMETER CHECKER.
@@ -178,7 +189,7 @@ namespace RP {
 			logger->warning("Help command doesn't accept any parameters");
 		}
 
-		if (FIRST_PARAMETER IS ITERATE_COMMAND AND(SECOND_PARAMETER IS_NOT DIRECTORYLIST OR SECOND_PARAMETER IS_NOT COMMANDLIST)) {
+		if (FIRST_PARAMETER == ITERATE_COMMAND && (SECOND_PARAMETER != DIRECTORYLIST && SECOND_PARAMETER != COMMANDLIST)) {
 			logger->error(PARAMETER_ERROR_CODE_4);
 		}
 		
@@ -193,7 +204,17 @@ namespace RP {
 		/*---------------------------
 		  EXTRA PARAMETER CHECKER.
 		----------------------------*/
-
+		if (input == CLEAR_COMMAND) { // clear
+			input.clear();
+			system("cls");
+			init();
+		}
+		if (input == LOG_STRING_COMMAND) {
+			log(_RP getCombinedString());
+		}
+		if (input == DISPLAY_SECOND_PARAMETER) {
+			std::cout << s_p << newline;
+		}
 
 
 
